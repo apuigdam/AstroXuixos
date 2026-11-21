@@ -14,7 +14,12 @@ public class PlayerScript : MonoBehaviour
     public float tiempoEntreDisparos = 0.5f; // Retardo en segundos
     private float proximoDisparo = 0f;
 
-    int vides = 1;
+    // --- Efectes dels xuixos (els canvia el GestorEfectes, no cal tocar-ho a l'Inspector) ---
+    // Les vides ara les porta el GameManager.
+    [HideInInspector] public bool controlsInvertits = false;
+    [HideInInspector] public float multiplicadorVelocitat = 1f;
+    [HideInInspector] public bool dispararTriple = false;
+    public float angleDisparTriple = 12f;
 
     void Start()
     {
@@ -40,20 +45,23 @@ public class PlayerScript : MonoBehaviour
             vertical = -1f;
         }
 
-        playerBody.linearVelocity = new Vector2(forwardSpeed, vertical * verticalSpeed);
-
-
-
-        if (gameObject.CompareTag("Meteor"))
+        if (controlsInvertits)
         {
-            vides--;
-
+            vertical = -vertical;   // efecte Tecles invertides
         }
+
+        playerBody.linearVelocity = new Vector2(forwardSpeed * multiplicadorVelocitat, vertical * verticalSpeed);
     }
 
     void Disparar()
     {
         Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation);
+
+        if (dispararTriple)   // efecte Dispar triple: dues bales més en diagonal
+        {
+            Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation * Quaternion.Euler(0, 0, angleDisparTriple));
+            Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation * Quaternion.Euler(0, 0, -angleDisparTriple));
+        }
     }
 
 

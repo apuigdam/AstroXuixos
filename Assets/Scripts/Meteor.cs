@@ -6,8 +6,11 @@ public class Meteor : MonoBehaviour
     public Sprite fase1; // Sprite tras 1er impacto
     public Sprite fase2; // Sprite tras 2do impacto
     public GameObject explosionPrefab;
+    [Tooltip("Punts que dona en destruir-lo (GDD: petit 50, mitja 100, gran 200)")]
+    public int punts = 50;
 
     private int hits = 0;
+    private bool destruit = false;
     private SpriteRenderer sr;
     private Animator anim;
 
@@ -62,11 +65,24 @@ public class Meteor : MonoBehaviour
         }
         else if (hits >= 3)
         {
-            if (explosionPrefab != null)
-            {
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
+            Destruir();
         }
+    }
+
+    // Explota, dona els punts i desapareix (tambe el fa servir l'efecte Trenca-asteroides)
+    public void Destruir()
+    {
+        if (destruit) return;
+        destruit = true;
+
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SumarPunts(punts);
+        }
+        Destroy(gameObject);
     }
 }

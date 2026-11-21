@@ -167,7 +167,7 @@ public static class ConstruirEscenaMenu
 
         // Dues columnes: acció (esquerra) i tecla (dreta). Edita els textos des de l'Inspector.
         string accions = "Moure la nau\n\nDisparar\n\nPausa";
-        string tecles = "WASD / Fletxes\n\nEspai\n\nEsc";
+        string tecles = "Fletxes amunt/avall\n\nEspai\n\nEsc";
         RectTransform colAccions = CrearText("Accions", caixa, accions, 26, ColorCrema, TextAnchor.UpperLeft);
         colAccions.anchoredPosition = new Vector2(-200, 30);
         colAccions.sizeDelta = new Vector2(440, 260);
