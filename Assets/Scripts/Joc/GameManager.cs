@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
             if (Efectes == null) Efectes = nau.AddComponent<GestorEfectes>();
             Xocs = nau.GetComponent<XocsJugador>();
             if (Xocs == null) Xocs = nau.AddComponent<XocsJugador>();
+            if (nau.GetComponent<LimitsPantalla>() == null) nau.AddComponent<LimitsPantalla>();
         }
         else
         {
