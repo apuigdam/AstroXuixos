@@ -8,6 +8,6 @@ public class CameraScript : MonoBehaviour
     void LateUpdate()
     {
         // La càmera segeuix l'ocell a l'eix X
-        transform.position = new Vector3(targetPlayer.position.x + 5, transform.position.y, transform.position.z);
+        transform.position = new Vector3(targetPlayer.position.x + 7, transform.position.y, transform.position.z);
     }
 }
