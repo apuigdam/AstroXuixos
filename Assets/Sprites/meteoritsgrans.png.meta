@@ -1,57 +1,48 @@
 fileFormatVersion: 2
-guid: f21edaa17913cd64bb48dc9f2d1b3dab
+guid: 9a804cc20e844eb438c38fffc7327d2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8000066783674684163
-    second: AsteroidPetit_spritesheet (1)_0
+      213: -2171369540994007661
+    second: meteoritsgrans_0
   - first:
-      213: 7430224837894958578
-    second: AsteroidPetit_spritesheet (1)_1
+      213: 6964885426774006955
+    second: meteoritsgrans_1
   - first:
-      213: 6200151565523935165
-    second: AsteroidPetit_spritesheet (1)_2
+      213: -8936815882796789344
+    second: meteoritsgrans_2
   - first:
-      213: -9002468760634741447
-    second: AsteroidPetit_spritesheet (1)_3
+      213: -7138069151468798088
+    second: meteoritsgrans_3
   - first:
-      213: 3362805396716477082
-    second: AsteroidPetit_spritesheet (1)_4
+      213: 7269439001194950318
+    second: meteoritsgrans_4
   - first:
-      213: -5046519528081256960
-    second: AsteroidPetit_spritesheet (1)_5
+      213: 8518115421900813588
+    second: meteoritsgrans_5
   - first:
-      213: 134520485514435844
-    second: AsteroidPetit_spritesheet (1)_6
+      213: -8659161456472436403
+    second: meteoritsgrans_6
   - first:
-      213: 5525254887492945862
-    second: AsteroidPetit_spritesheet (1)_7
+      213: -7009480478645053408
+    second: meteoritsgrans_7
   - first:
-      213: -8587834962091733525
-    second: AsteroidPetit_spritesheet (1)_8
+      213: -4470832421359081527
+    second: meteoritsgrans_8
   - first:
-      213: 6624018565429245720
-    second: AsteroidPetit_spritesheet (1)_9
+      213: 2849040574265893351
+    second: meteoritsgrans_9
   - first:
-      213: -1557906846495765921
-    second: AsteroidPetit_spritesheet (1)_10
+      213: 810960194996036686
+    second: meteoritsgrans_10
   - first:
-      213: -7187480904698264577
-    second: AsteroidPetit_spritesheet (1)_11
-  - first:
-      213: -3548173746205289769
-    second: AsteroidPetit_spritesheet (1)_12
-  - first:
-      213: -4208919002414530417
-    second: AsteroidPetit_spritesheet (1)_13
-  - first:
-      213: 966266838820694585
-    second: AsteroidPetit_spritesheet (1)_14
+      213: -5964948009051383286
+    second: meteoritsgrans_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -79,7 +70,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -93,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,7 +108,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -168,7 +159,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Asteroides_0
+      name: meteoritsgrans_0
       rect:
         serializedVersion: 2
         x: 0
@@ -181,16 +172,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8f20ab7ce2d991b4ea3998145f3847fb
-      internalID: -1007776091
+      spriteID: 39df2f828eebdd1e0800000000000000
+      internalID: -2171369540994007661
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Asteroides_1
+      name: meteoritsgrans_1
       rect:
         serializedVersion: 2
         x: 96
@@ -203,16 +194,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c25cf6e2a6f9e9241be5abc156ec631d
-      internalID: -681547322
+      spriteID: bacd824e46e38a060800000000000000
+      internalID: 6964885426774006955
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Asteroides_2
+      name: meteoritsgrans_2
       rect:
         serializedVersion: 2
         x: 192
@@ -225,10 +216,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f0cfa8412a01b8b418ef41f7cf168bcb
-      internalID: 1423438208
+      spriteID: 0a114dacd4d0af380800000000000000
+      internalID: -8936815882796789344
       vertices: []
       indices: 
       edges: []
@@ -237,7 +228,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ce065fb83c43db84d8bea6e2f4dcb333
+    spriteID: f4a7f6f171ea1fb41a40f237e923184d
     internalID: 0
     vertices: []
     indices: 
@@ -249,9 +240,9 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":96.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Asteroides_0: -1007776091
-      Asteroides_1: -681547322
-      Asteroides_2: 1423438208
+      meteoritsgrans_0: -2171369540994007661
+      meteoritsgrans_1: 6964885426774006955
+      meteoritsgrans_2: -8936815882796789344
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
