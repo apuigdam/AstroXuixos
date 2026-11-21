@@ -183,6 +183,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>Per a proves: acaba la partida com si t'haguessis quedat sense vides.</summary>
+    public void ForcarGameOver()
+    {
+        Vides = 0;
+        GameOver();
+    }
+
     public void MostrarMissatge(string text, Color color)
     {
         Debug.Log("[Joc] " + text);
@@ -221,7 +228,16 @@ public class GameManager : MonoBehaviour
             if (rb != null) rb.linearVelocity = Vector2.zero;
         }
 
-        StartCoroutine(CarregarDespres(escena));
+        if (guanyat)
+        {
+            StartCoroutine(CarregarDespres(escena));
+        }
+        else
+        {
+            // Game over: la nau mor i surt la pantalla de GAME OVER, que torna al menú
+            if (Xocs != null) Xocs.Morir();
+            PantallaGameOver.Mostrar(Punts, XuixosRecollits, XuixosTotals, escena);
+        }
     }
 
     IEnumerator CarregarDespres(string escena)
