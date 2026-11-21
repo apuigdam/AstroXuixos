@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3916040453926859663}
   - component: {fileID: 8213512622076004674}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background2rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1657891786896590192}
   - component: {fileID: 3853347412689405373}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 542077265201478282}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: backgrounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1897169913819838723}
   - component: {fileID: 540536117987325925}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background1rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9183493043325566891}
   - component: {fileID: 6257470382217104005}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background1rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8984658393963894278}
   - component: {fileID: 9011260499920720526}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background1rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7333297382195626549}
   - component: {fileID: 4066379972615836234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background4rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2444242921640663981}
   - component: {fileID: 1085224659966041704}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378400723547023989}
   - component: {fileID: 3332570319868854718}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background3rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 594732125820973151}
   - component: {fileID: 8615019379310078005}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,7 +870,7 @@ GameObject:
   m_Component:
   - component: {fileID: 991561107756281296}
   - component: {fileID: 4325253400286694234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background1rep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
