@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 559611752}
   - component: {fileID: 559611751}
+  - component: {fileID: 559611753}
   m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
@@ -185,6 +186,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &559611753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559611750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70463144b936281499d52238e43ba79b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControladorCinematica
+  escenaSeguent: Game
+  esPotSaltar: 1
 --- !u!1 &1302854101
 GameObject:
   m_ObjectHideFlags: 0
