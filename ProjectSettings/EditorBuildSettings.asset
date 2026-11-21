@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 6f1f62c66a569604cab343492a710ebf
+  - enabled: 1
+    path: Assets/Scenes/CinematicaInicial.unity
+    guid: eea41dd8bcb225147ab510f5169929a4
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: def77293e308f3044a8215765c066194
+  - enabled: 1
+    path: Assets/Scenes/CinematicaFinal.unity
+    guid: 1a7477a25bdb33b4a93279520f16bd33
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
