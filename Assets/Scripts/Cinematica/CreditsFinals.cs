@@ -24,6 +24,8 @@ public class CreditsFinals : MonoBehaviour
     [Header("Crèdits")]
     public RectTransform contingut;
     public Direccio direccio = Direccio.DaltABaix;
+    [Tooltip("Només de dalt a baix: si està marcat, el primer grup de la llista és el primer que entra (i queda a sota de tot). Si no, el bloc baixa en l'ordre normal de lectura.")]
+    public bool invertirOrdre = false;
     [Tooltip("Velocitat en píxels per segon (referència 1920x1080)")]
     public float velocitat = 110f;
     [Tooltip("Segons d'espera quan els crèdits ja han sortit de la pantalla")]
@@ -49,10 +51,10 @@ public class CreditsFinals : MonoBehaviour
             return;
         }
 
-        // De dalt a baix: el primer grup ha d'entrar primer, i com que entra per dalt,
-        // ha d'estar a la part de baix del bloc. Per això invertim l'ordre dels grups
+        // Opcional: de dalt a baix, si volem que el primer grup entri primer, ha d'estar a la
+        // part de baix del bloc. Per això invertim l'ordre dels grups
         // (dins de cada grup l'ordre no canvia: el títol continua a sobre dels noms).
-        if (direccio == Direccio.DaltABaix)
+        if (direccio == Direccio.DaltABaix && invertirOrdre)
         {
             int n = contingut.childCount;
             for (int i = 0; i < n; i++)

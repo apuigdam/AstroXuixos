@@ -27,10 +27,17 @@ public static class ConstruirCredits
     static readonly (Tipus tipus, string text)[][] Grups =
     {
         new[] { (Tipus.Titol, "ASTROXUIXOS"), (Tipus.Text, "GameJam La Girotrònica 2026") },
-        new[] { (Tipus.Seccio, "SO I EFECTES"), (Tipus.Nom, "Quim"), (Tipus.Nom, "Lluc") },
-        new[] { (Tipus.Seccio, "PROGRAMACIÓ"), (Tipus.Nom, "Pol"), (Tipus.Nom, "Martí"), (Tipus.Nom, "Arnau"), (Tipus.Nom, "Varinder") },
-        new[] { (Tipus.Seccio, "DISSENY GRÀFIC"), (Tipus.Nom, "Martí"), (Tipus.Nom, "Quim"), (Tipus.Nom, "Pol") },
-        new[] { (Tipus.Seccio, "DISSENY DE NIVELLS"), (Tipus.Nom, "Najib"), (Tipus.Nom, "Varinder") },
+        new[]
+        {
+            (Tipus.Seccio, "PLATEA FC"),
+            (Tipus.Nom, "Martí Colomer"),
+            (Tipus.Nom, "Arnau Puig"),
+            (Tipus.Nom, "Pol Piris"),
+            (Tipus.Nom, "Lluc Bassó"),
+            (Tipus.Nom, "Quim Garijo"),
+            (Tipus.Nom, "Varinder Singh"),
+            (Tipus.Nom, "Najib El Qasmy"),
+        },
         new[] { (Tipus.Seccio, "GRÀCIES PER JUGAR!") },
     };
 
@@ -144,6 +151,7 @@ public static class ConstruirCredits
         credits.video = video;
         credits.contingut = cont;
         credits.direccio = CreditsFinals.Direccio.DaltABaix;
+        credits.invertirOrdre = false;   // el bloc baixa tal com es llegeix
         credits.segonInici = 22.5f;
         credits.escenaFinal = "Menu";
 
