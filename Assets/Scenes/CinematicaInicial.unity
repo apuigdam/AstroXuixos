@@ -155,7 +155,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 1
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
@@ -167,7 +167,7 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 1
@@ -202,6 +202,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorCinematica
   escenaSeguent: Game
   esPotSaltar: 1
+  textHistoria: "El xuixo de Girona \xE9s el postre m\xE9s buscat de l'univers pels
+    seus efectes ex\xF2tics.\n\nUn traficant espacial s'ha estavellat contra un meteorit
+    i ha perdut tot el carregament a l'espai.\n\nDesplega la nau secreta de la Catedral
+    de Girona, destrossa els asteroides i recupera'ls...\n\nsi sobrevius als seus
+    canvis de regles!"
+  lletresPerSegon: 45
+  segonsMaximText: 14
 --- !u!1 &1302854101
 GameObject:
   m_ObjectHideFlags: 0

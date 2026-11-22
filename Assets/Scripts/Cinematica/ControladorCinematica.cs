@@ -37,6 +37,8 @@ public class ControladorCinematica : MonoBehaviour
     void Awake()
     {
         video = GetComponent<VideoPlayer>();
+        video.source = VideoSource.Url;
+        video.url = Application.streamingAssetsPath + "/Videos/Intro_AstroXuixos_so.mp4";
         video.isLooping = false;               // si fes bucle, no s'acabaria mai
 
         if (!string.IsNullOrEmpty(textHistoria))
@@ -50,6 +52,7 @@ public class ControladorCinematica : MonoBehaviour
 
     void Start()
     {
+        video.Play();
         if (mostrantHistoria) StartCoroutine(Historia());
     }
 

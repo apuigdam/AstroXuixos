@@ -14,6 +14,11 @@ using UnityEngine.Video;
 /// </summary>
 public class CreditsFinals : MonoBehaviour
 {
+    private void Awake()
+    {
+        video.source = VideoSource.Url;
+        video.url = Application.streamingAssetsPath + "/Videos/Final_XuixosGalacticShop_so.mp4";
+    }
     public enum Direccio { DaltABaix, BaixADalt }
 
     [Header("Vídeo")]
@@ -50,6 +55,7 @@ public class CreditsFinals : MonoBehaviour
 
     void Start()
     {
+        video.Play();
         if (contingut == null)
         {
             Debug.LogError("[Credits] Falta assignar el 'contingut' a l'Inspector.");
