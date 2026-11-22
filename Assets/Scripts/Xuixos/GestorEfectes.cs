@@ -29,6 +29,13 @@ public class GestorEfectes : MonoBehaviour
         new EfecteDisparTriple(),
         new EfecteVidaExtra(),
         new EfectePlacebo(),
+        new EfecteModeMirall(),
+        new EfecteCameraLenta(),
+        new EfectePuntsInvertits(),
+        new EfecteBalesDePlastic(),
+        new EfecteMonocromatisme(),
+        new EfecteLlaonaDeGirona(),
+        new EfecteSenseHUD(),
     };
 
     private readonly Dictionary<EfecteXuixo, int> vegades = new Dictionary<EfecteXuixo, int>();
@@ -38,6 +45,7 @@ public class GestorEfectes : MonoBehaviour
 
     private PlayerScript nau;
     private GameManager gm;
+    private bool netejat = false;
 
     void Start()
     {
@@ -91,18 +99,33 @@ public class GestorEfectes : MonoBehaviour
 
     void Update()
     {
-        if (gm != null && gm.PartidaAcabada) return;
+        if (gm != null && gm.PartidaAcabada)
+        {
+            // En acabar la partida traiem tots els efectes (que no quedi res a mitges)
+            if (!netejat) { DesactivarTots(); netejat = true; }
+            return;
+        }
+
+        // Comptem en segons reals (la Càmera lenta no allarga els altres efectes),
+        // però si el joc està en pausa (timeScale 0) el temps s'atura
+        float dt = Time.timeScale > 0f ? Time.unscaledDeltaTime : 0f;
 
         // Recorrem la llista al revés perquè podem treure'n elements
         for (int i = actius.Count - 1; i >= 0; i--)
         {
-            actius[i].tempsRestant -= Time.deltaTime;
+            actius[i].tempsRestant -= dt;
             if (actius[i].tempsRestant <= 0f)
             {
                 actius[i].efecte.Desactivar(nau, gm);
                 actius.RemoveAt(i);
             }
         }
+    }
+
+    public void DesactivarTots()
+    {
+        foreach (EfecteActiu a in actius) a.efecte.Desactivar(nau, gm);
+        actius.Clear();
     }
 
     public static Color ColorDe(TipusEfecte tipus)

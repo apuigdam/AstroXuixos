@@ -69,7 +69,7 @@ public class ControladorCinematica : MonoBehaviour
         if (canviant) return;   // evita carregar l'escena dues vegades
         canviant = true;
 
-        video.Stop();
-        SceneManager.LoadScene(escenaSeguent);
+        // Fosa a negre cap a l'escena següent (el vídeo es queda a l'últim fotograma mentre es fon)
+        Transicio.CarregarEscena(escenaSeguent);
     }
 }

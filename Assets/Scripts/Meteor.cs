@@ -8,6 +8,8 @@ public class Meteor : MonoBehaviour
     public GameObject explosionPrefab;
     [Tooltip("Punts que dona en destruir-lo (GDD: petit 50, mitja 100, gran 200)")]
     public int punts = 50;
+    [Tooltip("Trets que calen per trencar-lo (GDD: petit 2, mitja 4, gran 8)")]
+    public int impactesPerTrencar = 3;
 
     private int hits = 0;
     private bool destruit = false;
@@ -36,7 +38,7 @@ public class Meteor : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            RecibirImpacto();
+            if (!EsDePlastic(other.gameObject)) RecibirImpacto();
             Destroy(other.gameObject);
         }
     }
@@ -46,42 +48,55 @@ public class Meteor : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            RecibirImpacto();
+            if (!EsDePlastic(collision.gameObject)) RecibirImpacto();
             Destroy(collision.gameObject);
         }
     }
         
     public void RecibirImpacto()
     {
+        if (destruit) return;
         hits++;
 
-        if (hits == 1)
+        if (hits >= impactesPerTrencar)
         {
-            if (sr != null && fase1 != null) sr.sprite = fase1;
+            Destruir();
+            return;
         }
-        else if (hits == 2)
+
+        // Canvia el dibuix segons el mal rebut (3 fases)
+        float mal = (float)hits / impactesPerTrencar;
+        if (mal >= 2f / 3f)
         {
             if (sr != null && fase2 != null) sr.sprite = fase2;
         }
-        else if (hits >= 3)
+        else if (mal >= 1f / 3f)
         {
-            Destruir();
+            if (sr != null && fase1 != null) sr.sprite = fase1;
         }
     }
 
+    // Efecte "Bales de plastic": la bala rebota sense fer mal
+    static bool EsDePlastic(GameObject bala)
+    {
+        Bala b = bala.GetComponent<Bala>();
+        return b != null && b.deplastic;
+    }
+
     // Explota, dona els punts i desapareix (tambe el fa servir l'efecte Trenca-asteroides)
-    public void Destruir()
+    public void Destruir(bool donarPunts = true)
     {
         if (destruit) return;
         destruit = true;
+        Sons.Explosio();
 
         if (explosionPrefab != null)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
-        if (GameManager.Instance != null)
+        if (donarPunts && GameManager.Instance != null)
         {
-            GameManager.Instance.SumarPunts(punts);
+            GameManager.Instance.SumarPuntsMeteorit(punts);   // te en compte l'efecte Punts invertits
         }
         Destroy(gameObject);
     }

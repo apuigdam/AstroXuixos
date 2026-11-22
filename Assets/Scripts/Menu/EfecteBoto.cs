@@ -52,6 +52,8 @@ public class EfecteBoto : MonoBehaviour, IPointerEnterHandler, ISelectHandler, I
     public void OnSelect(BaseEventData eventData)
     {
         seleccionat = true;
+        // so de passar per sobre (no en obrir el menú, quan se selecciona JUGAR sol)
+        if (Time.timeSinceLevelLoad > 0.3f) Sons.PassarPerSobre();
         if (etiqueta != null) etiqueta.color = colorSeleccionat;
     }
 

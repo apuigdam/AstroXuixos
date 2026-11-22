@@ -31,6 +31,16 @@ public class MenuPrincipal : MonoBehaviour
 
         // Deixem el botó JUGAR seleccionat perquè funcioni amb teclat i comandament
         Seleccionar(botoJugar);
+
+        // Música del menú (surt de BibliotecaSons)
+        if (Sons.Biblioteca != null && Sons.Biblioteca.musicaMenu != null)
+        {
+            AudioSource musica = gameObject.AddComponent<AudioSource>();
+            musica.clip = Sons.Biblioteca.musicaMenu;
+            musica.loop = true;
+            musica.volume = 0.6f;
+            musica.Play();
+        }
     }
 
     void Update()
@@ -65,12 +75,14 @@ public class MenuPrincipal : MonoBehaviour
         }
 
         carregant = true;
-        SceneManager.LoadScene(escenaJugar);
+        Sons.ClicBoto();
+        Transicio.CarregarEscena(escenaJugar);
     }
 
     public void ObrirControls()
     {
         if (panellControls == null) return;
+        Sons.ClicBoto();
         panellControls.SetActive(true);
         Seleccionar(botoTornar);
     }
@@ -78,6 +90,7 @@ public class MenuPrincipal : MonoBehaviour
     public void TancarControls()
     {
         if (panellControls == null) return;
+        Sons.ClicBoto();
         panellControls.SetActive(false);
         Seleccionar(botoControls);
     }
@@ -85,6 +98,7 @@ public class MenuPrincipal : MonoBehaviour
     public void Sortir()
     {
         Debug.Log("[Menu] Sortint del joc...");
+        Sons.ClicBoto();
 #if UNITY_EDITOR
         // A l'editor, Application.Quit() no fa res: aturem el mode Play
         UnityEditor.EditorApplication.isPlaying = false;

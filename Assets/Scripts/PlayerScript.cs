@@ -19,6 +19,8 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public bool controlsInvertits = false;
     [HideInInspector] public float multiplicadorVelocitat = 1f;
     [HideInInspector] public bool dispararTriple = false;
+    [HideInInspector] public bool dispararEnrere = false;   // efecte Mode mirall
+    [HideInInspector] public bool balesDePlastic = false;   // efecte Bales de plastic
     public float angleDisparTriple = 12f;
 
     void Start()
@@ -55,13 +57,39 @@ public class PlayerScript : MonoBehaviour
 
     void Disparar()
     {
-        Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation);
+        if (prefabBala == null || puntoDisparo == null) return;
+        Sons.Dispar();
+
+        GameObject central = CrearBala(0f);
 
         if (dispararTriple)   // efecte Dispar triple: dues bales més en diagonal
         {
-            Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation * Quaternion.Euler(0, 0, angleDisparTriple));
-            Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation * Quaternion.Euler(0, 0, -angleDisparTriple));
+            GameObject dalt = CrearBala(angleDisparTriple);
+            GameObject baix = CrearBala(-angleDisparTriple);
+            // que les tres bales no xoquin entre elles en sortir del mateix punt
+            IgnorarXocs(central, dalt);
+            IgnorarXocs(central, baix);
+            IgnorarXocs(dalt, baix);
         }
+    }
+
+    GameObject CrearBala(float angle)
+    {
+        if (dispararEnrere) angle += 180f;   // efecte Mode mirall: dispara cap enrere
+        GameObject bala = Instantiate(prefabBala, puntoDisparo.position, puntoDisparo.rotation * Quaternion.Euler(0, 0, angle));
+        if (balesDePlastic)
+        {
+            Bala b = bala.GetComponent<Bala>();
+            if (b != null) b.FerDePlastic();
+        }
+        return bala;
+    }
+
+    static void IgnorarXocs(GameObject a, GameObject b)
+    {
+        Collider2D ca = a.GetComponent<Collider2D>();
+        Collider2D cb = b.GetComponent<Collider2D>();
+        if (ca != null && cb != null) Physics2D.IgnoreCollision(ca, cb);
     }
 
 

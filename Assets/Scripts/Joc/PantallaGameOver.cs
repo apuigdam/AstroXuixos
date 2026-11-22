@@ -29,6 +29,9 @@ public class PantallaGameOver : MonoBehaviour
 
     public static PantallaGameOver Mostrar(int punts, int xuixos, int xuixosTotals, string escenaMenu)
     {
+        Sons.AturarMusica();   // para la música del joc
+        Sons.GameOver();
+
         GameObject go = new GameObject("PantallaGameOver", typeof(RectTransform), typeof(Canvas),
                                        typeof(CanvasScaler), typeof(CanvasGroup));
         go.layer = LayerMask.NameToLayer("UI");
@@ -127,10 +130,6 @@ public class PantallaGameOver : MonoBehaviour
         if (sortint) return;
         sortint = true;
         Time.timeScale = 1f;
-
-        if (Application.CanStreamedLevelBeLoaded(escenaMenu))
-            SceneManager.LoadScene(escenaMenu);
-        else
-            Debug.LogError("[GameOver] No es pot carregar l'escena '" + escenaMenu + "'.");
+        Transicio.CarregarEscena(escenaMenu);
     }
 }

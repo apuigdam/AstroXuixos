@@ -47,11 +47,8 @@ public class Xuixo : MonoBehaviour
     /// <summary>Què passa quan s'agafa. Les classes filles ho poden canviar.</summary>
     protected virtual void Recollir(GameObject nau)
     {
-        if (soRecollir != null)
-        {
-            Vector3 posicio = Camera.main != null ? Camera.main.transform.position : transform.position;
-            AudioSource.PlayClipAtPoint(soRecollir, posicio, volum);
-        }
+        if (soRecollir != null) Sons.Reproduir(soRecollir, volum);
+        else Sons.AgafarXuixo();
 
         if (GameManager.Instance != null)
             GameManager.Instance.XuixoRecollit();

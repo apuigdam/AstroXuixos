@@ -87,8 +87,14 @@ public class XocsJugador : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && !EsInvencible)
+        {
             GameManager.Instance.RebreDany();
+
+            // El meteorit que t'ha tocat explota (sense donar punts)
+            Meteor tocat = altre.GetComponentInParent<Meteor>();
+            if (tocat != null) tocat.Destruir(false);
+        }
     }
 
     void Update()

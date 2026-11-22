@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261b2d0142b2c4e4cab97f49889741a1, type: 3}
+  m_Name: BibliotecaSons
+  m_EditorClassIdentifier: Assembly-CSharp::BibliotecaSons
+  musicaMenu: {fileID: 8300000, guid: ec36078355d119047a500cdb7e70dd8f, type: 3}
+  clicBoto: {fileID: 8300000, guid: d6218e903f62fd04f83b52e246188eab, type: 3}
+  passarPerSobreBoto: {fileID: 8300000, guid: 314e96a5dc9cd574894852f132fc30cf, type: 3}
+  dispar: {fileID: 8300000, guid: e5bbf3c8593b49e4abd64501009478ab, type: 3}
+  explosioMeteorit: {fileID: 8300000, guid: 621463f95363ccf4390dda87e381e08d, type: 3}
+  xocNau: {fileID: 8300000, guid: 36b98e4b38bbf28468bd97e8e85df8dd, type: 3}
+  agafarXuixo: {fileID: 8300000, guid: 5a0306f77767a4d4bbb2be7c579e433f, type: 3}
+  gameOver: {fileID: 8300000, guid: 907d49f4b7e728349b04dd9aa6aa07cb, type: 3}

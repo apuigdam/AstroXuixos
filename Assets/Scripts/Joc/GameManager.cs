@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
     /// <summary>Multiplicador de punts (Hipervelocitat el posa a 2).</summary>
     public int MultiplicadorPunts { get; set; } = 1;
 
+    /// <summary>Efecte Punts invertits: el meteorit petit dona els punts del gran i al revés.</summary>
+    public bool PuntsInvertits { get; set; } = false;
+
+    const float FixedDeltaNormal = 0.02f;   // ProjectSettings > Time > Fixed Timestep
+
     /// <summary>S'envia cada cop que s'ha de mostrar un missatge gran (efecte, -1 vida, game over...).</summary>
     public event Action<string, Color> MissatgeMostrat;
 
@@ -90,7 +95,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1f;
+        CanviarEscalaTemps(1f);
         Vides = videsInicials;
 
         // La nau del jugador (tag "Player")
@@ -152,6 +157,24 @@ public class GameManager : MonoBehaviour
         Punts += punts * MultiplicadorPunts;
     }
 
+    /// <summary>Punts d'un meteorit destruït (petit 50, mitjà 100, gran 200).</summary>
+    public void SumarPuntsMeteorit(int punts)
+    {
+        if (PuntsInvertits)
+        {
+            if (punts == 50) punts = 200;
+            else if (punts == 200) punts = 50;
+        }
+        SumarPunts(punts);
+    }
+
+    /// <summary>Alenteix o accelera tot el joc (efecte Càmera lenta). 1 = normal.</summary>
+    public void CanviarEscalaTemps(float escala)
+    {
+        Time.timeScale = escala;
+        Time.fixedDeltaTime = FixedDeltaNormal * escala;   // perquè la física no vagi a batzegades
+    }
+
     public void XuixoRecollit()
     {
         if (PartidaAcabada) return;
@@ -172,6 +195,7 @@ public class GameManager : MonoBehaviour
         if (Xocs != null && Xocs.EsInvencible) return;
 
         Vides--;
+        Sons.XocNau();
         if (Vides <= 0)
         {
             Vides = 0;
@@ -215,6 +239,7 @@ public class GameManager : MonoBehaviour
 
         MostrarMissatge(missatge, color);
         PartidaAcabada = true;
+        CanviarEscalaTemps(1f);   // per si hi havia la Càmera lenta activa
 
         ResultatsPartida.Guanyat = guanyat;
         ResultatsPartida.Punts = Punts;
@@ -244,10 +269,6 @@ public class GameManager : MonoBehaviour
     IEnumerator CarregarDespres(string escena)
     {
         yield return new WaitForSecondsRealtime(segonsAbansDeCanviar);
-
-        if (Application.CanStreamedLevelBeLoaded(escena))
-            SceneManager.LoadScene(escena);
-        else
-            Debug.LogError("[GameManager] No es pot carregar l'escena '" + escena + "'. Està a la llista d'escenes del build?");
+        Transicio.CarregarEscena(escena);
     }
 }
