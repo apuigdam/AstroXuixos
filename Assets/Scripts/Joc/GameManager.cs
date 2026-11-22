@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     /// <summary>S'envia cada cop que s'ha de mostrar un missatge gran (efecte, -1 vida, game over...).</summary>
     public event Action<string, Color> MissatgeMostrat;
+    // Igual però amb una línia de descripció a sota (la fan servir els efectes dels xuixos)
+    public event Action<string, Color, string> MissatgeAmbDescripcio;
 
     public PlayerScript Jugador { get; private set; }
     public GestorEfectes Efectes { get; private set; }
@@ -220,10 +222,11 @@ public class GameManager : MonoBehaviour
         GameOver();
     }
 
-    public void MostrarMissatge(string text, Color color)
+    public void MostrarMissatge(string text, Color color, string descripcio = "")
     {
-        Debug.Log("[Joc] " + text);
+        Debug.Log("[Joc] " + text + (string.IsNullOrEmpty(descripcio) ? "" : " - " + descripcio));
         MissatgeMostrat?.Invoke(text, color);
+        MissatgeAmbDescripcio?.Invoke(text, color, descripcio);
     }
 
     // ---------- Final de la partida ----------

@@ -39,6 +39,7 @@ public class Xuixo : MonoBehaviour
     {
         if (recollit) return;                 // evita agafar-lo dues vegades
         if (!altre.CompareTag("Player")) return;
+        if (GameManager.Instance != null && GameManager.Instance.PartidaAcabada) return;
 
         recollit = true;
         Recollir(altre.gameObject);

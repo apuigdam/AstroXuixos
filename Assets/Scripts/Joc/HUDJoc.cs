@@ -9,7 +9,8 @@ using UnityEngine.UI;
 ///  - Barra de vida: amb 3 vides o més es veu Vida100, amb 2 Vida66 i amb 1 Vida25.
 ///  - Puntuació: el text "0000000".
 ///  - A dalt a l'esquerra: xuixos recollits (x/10) i els efectes actius amb els segons que queden.
-///  - Al mig: el missatge gran de cada efecte ("TECLES INVERTIDES!"...).
+///  - Al mig: el nom de cada efecte en gran i, a sota, què fa.
+///    Es veu sempre, també amb l'efecte "HUD?" (que amaga la resta del HUD).
 /// Els textos de dalt a l'esquerra i del mig es creen sols si no se n'assigna cap.
 /// </summary>
 public class HUDJoc : MonoBehaviour
@@ -26,7 +27,9 @@ public class HUDJoc : MonoBehaviour
     [Header("Xuixos i efectes (es creen sols si estan buits)")]
     public Text textInfo;
     public Text textMissatge;
+    public Text textDescripcio;
     public float segonsMissatge = 2.2f;
+    public float segonsExtraDescripcio = 1.3f;   // més temps si hi ha descripció per llegir
 
     static readonly Color Taronja = new Color32(255, 200, 120, 255);
 
@@ -44,6 +47,17 @@ public class HUDJoc : MonoBehaviour
     void Start()
     {
         Amagat = false;
+
+        // Que el HUD es vegi igual en qualsevol resolució (està dissenyat per a 1920x1080)
+        CanvasScaler escalador = GetComponent<CanvasScaler>();
+        if (escalador != null && escalador.uiScaleMode == CanvasScaler.ScaleMode.ConstantPixelSize)
+        {
+            escalador.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            escalador.referenceResolution = new Vector2(1920, 1080);
+            escalador.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            escalador.matchWidthOrHeight = 0.5f;
+        }
+
         grup = GetComponent<CanvasGroup>();
         if (grup == null) grup = gameObject.AddComponent<CanvasGroup>();
 
@@ -54,6 +68,14 @@ public class HUDJoc : MonoBehaviour
             textInfo = CrearText("InfoXuixosEfectes", new Vector2(0f, 1f), new Vector2(40, -40), 24, TextAnchor.UpperLeft);
         if (textMissatge == null)
             textMissatge = CrearText("MissatgeEfecte", new Vector2(0.5f, 0.5f), new Vector2(0, 160), 48, TextAnchor.MiddleCenter);
+        if (textDescripcio == null)
+            textDescripcio = CrearText("DescripcioEfecte", new Vector2(0.5f, 0.5f), new Vector2(0, 95), 22, TextAnchor.MiddleCenter);
+
+        // Els missatges van en un Canvas a part perquè no s'amaguin amb l'efecte "HUD?"
+        // (si no, no sabries què t'ha tocat)
+        Transform canvasMissatges = CrearCanvasMissatges();
+        textMissatge.transform.SetParent(canvasMissatges, false);
+        textDescripcio.transform.SetParent(canvasMissatges, false);
 
         // Tutorial: els controls surten els primers segons de la partida
         textTutorial = CrearText("Tutorial", new Vector2(0.5f, 0f), new Vector2(0, 70), 22, TextAnchor.LowerCenter);
@@ -62,11 +84,12 @@ public class HUDJoc : MonoBehaviour
         textInfo.supportRichText = true;
         textInfo.lineSpacing = 1.4f;
         textMissatge.text = "";
+        textDescripcio.text = "";
     }
 
     void OnDestroy()
     {
-        if (gm != null) gm.MissatgeMostrat -= MostrarMissatge;
+        if (gm != null) gm.MissatgeAmbDescripcio -= MostrarMissatge;
     }
 
     void Update()
@@ -76,7 +99,7 @@ public class HUDJoc : MonoBehaviour
         {
             gm = GameManager.Instance;
             if (gm == null) return;
-            gm.MissatgeMostrat += MostrarMissatge;
+            gm.MissatgeAmbDescripcio += MostrarMissatge;
         }
 
         grup.alpha = Amagat ? 0f : 1f;
@@ -113,23 +136,54 @@ public class HUDJoc : MonoBehaviour
         }
         textInfo.text = sb.ToString();
 
+        // En pausa, el missatge no es veu (que no quedi darrere del menú de pausa)
+        bool enPausa = Time.timeScale == 0f;
+        textMissatge.enabled = !enPausa;
+        textDescripcio.enabled = !enPausa;
+
         // Missatge gran que es fon
         if (tempsMissatge > 0f)
         {
-            tempsMissatge -= Time.unscaledDeltaTime;
+            if (Time.timeScale > 0f) tempsMissatge -= Time.unscaledDeltaTime;   // en pausa no es fon
             Color c = colorMissatge;
             c.a = Mathf.Clamp01(tempsMissatge / 0.5f);
             textMissatge.color = c;
-            if (tempsMissatge <= 0f) textMissatge.text = "";
+            textDescripcio.color = new Color(0.96f, 0.93f, 0.84f, c.a);
+            if (tempsMissatge <= 0f) { textMissatge.text = ""; textDescripcio.text = ""; }
         }
     }
 
-    void MostrarMissatge(string text, Color color)
+    void MostrarMissatge(string text, Color color, string descripcio)
     {
         if (textMissatge == null) return;
         textMissatge.text = text;
+        textDescripcio.text = descripcio ?? "";
         colorMissatge = color;
-        tempsMissatge = segonsMissatge;
+        tempsMissatge = segonsMissatge + (string.IsNullOrEmpty(descripcio) ? 0f : segonsExtraDescripcio);
+    }
+
+    /// <summary>Canvas a part (amb la mateixa escala que el del HUD) només per als missatges.</summary>
+    Transform CrearCanvasMissatges()
+    {
+        GameObject go = new GameObject("Canvas_MissatgesEfectes", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler));
+        go.layer = gameObject.layer;
+
+        Canvas meu = GetComponent<Canvas>();
+        Canvas c = go.GetComponent<Canvas>();
+        c.renderMode = RenderMode.ScreenSpaceOverlay;
+        c.sortingOrder = (meu != null ? meu.sortingOrder : 0) + 1;
+
+        CanvasScaler cs = go.GetComponent<CanvasScaler>();
+        CanvasScaler original = GetComponent<CanvasScaler>();
+        if (original != null)
+        {
+            cs.uiScaleMode = original.uiScaleMode;
+            cs.scaleFactor = original.scaleFactor;
+            cs.referenceResolution = original.referenceResolution;
+            cs.screenMatchMode = original.screenMatchMode;
+            cs.matchWidthOrHeight = original.matchWidthOrHeight;
+        }
+        return go.transform;
     }
 
     Text CrearText(string nom, Vector2 ancora, Vector2 posicio, int mida, TextAnchor alineacio)

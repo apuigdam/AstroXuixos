@@ -72,13 +72,25 @@ public class CreditsFinals : MonoBehaviour
         if (mostrarResultats) CrearResultats();
 
         if (video != null)
+        {
             video.loopPointReached += VideoAcabat;
+            video.errorReceived += ErrorVideo;
+        }
     }
 
     void OnDestroy()
     {
         if (video != null)
+        {
             video.loopPointReached -= VideoAcabat;
+            video.errorReceived -= ErrorVideo;
+        }
+    }
+
+    private void ErrorVideo(VideoPlayer vp, string missatge)
+    {
+        Debug.LogWarning("[Credits] Error amb el vídeo: " + missatge + ". Passem directament als crèdits.");
+        Comencar();
     }
 
     void Update()

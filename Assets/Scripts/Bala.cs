@@ -10,8 +10,12 @@ public class Bala : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 direccio;
 
+    public float vidaMaxima = 4f;   // per si no arriba a sortir mai a la pantalla
+
     void Awake()
     {
+        Destroy(gameObject, vidaMaxima);
+
         // La direccio es fixa en neixer: la bala va SEMPRE recta
         direccio = transform.right;
 

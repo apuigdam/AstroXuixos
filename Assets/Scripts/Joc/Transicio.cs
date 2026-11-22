@@ -14,7 +14,8 @@ public class Transicio : MonoBehaviour
 
     private static Transicio instancia;
     private CanvasGroup grup;
-    private bool ocupada;
+    private bool ocupada;   // hi ha una fosa en marxa (de sortida o d'entrada)
+    private bool sortint;   // ja estem marxant cap a una escena nova
 
     /// <summary>Fon a negre, carrega l'escena i torna a aparèixer.</summary>
     public static void CarregarEscena(string escena)
@@ -27,7 +28,7 @@ public class Transicio : MonoBehaviour
         Obtenir().StartCoroutine(Obtenir().Fer(escena));
     }
 
-    public static bool EnCurs => instancia != null && instancia.ocupada;
+    public static bool EnCurs => instancia != null && (instancia.ocupada || instancia.sortint);
 
     static Transicio Obtenir()
     {
@@ -56,7 +57,13 @@ public class Transicio : MonoBehaviour
 
     IEnumerator Fer(string escena)
     {
-        if (ocupada) yield break;   // si ja n'hi ha una en marxa, no en comencem una altra
+        // Si ja estem marxant cap a una altra escena, no en comencem una altra
+        if (sortint) yield break;
+        sortint = true;
+
+        // Si encara s'està fent la fosa d'entrada de l'escena actual, esperem que acabi
+        // (abans la petició es perdia i el joc es quedava encallat, p. ex. prement ESC massa aviat)
+        while (ocupada) yield return null;
         ocupada = true;
         grup.blocksRaycasts = true;  // durant la fosa no es pot clicar res
 
@@ -74,6 +81,7 @@ public class Transicio : MonoBehaviour
         // 2. Carreguem l'escena nova
         Time.timeScale = 1f;
         yield return SceneManager.LoadSceneAsync(escena);
+        sortint = false;
 
         // 3. Tornem a aparèixer (i el so torna)
         for (float t = 0f; t < duradaFosa; t += Time.unscaledDeltaTime)

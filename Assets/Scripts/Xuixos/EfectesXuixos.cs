@@ -75,26 +75,19 @@ public class EfecteVidaExtra : EfecteXuixo
     public override string Missatge => "VIDA EXTRA! +1";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 0f;   // instantani
-    public override string Descripcio => "Recuperes una vida al moment.";
+    public override string Descripcio => "Recuperes una vida. Només surt si te'n falta alguna.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { gm.SumarVida(); }
 }
 
-/// <summary>Neutre: diu que t'ha tocat un poder... i no fa res.</summary>
+/// <summary>Neutre: no fa res.</summary>
 public class EfectePlacebo : EfecteXuixo
 {
-    static readonly string[] Missatges =
-    {
-        "SUPERPODER ACTIVAT!",
-        "ARA ETS IMPARABLE!",
-        "PODER DEL XUIXO DAURAT!",
-    };
-
     public override string Nom => "PLACEBO";
-    public override string Missatge => Missatges[Random.Range(0, Missatges.Length)];
-    public override TipusEfecte Tipus => TipusEfecte.Buff;   // es mostra com a buff per enganyar
+    public override string Missatge => "PLACEBO!";
+    public override TipusEfecte Tipus => TipusEfecte.Neutre;
     public override float Durada => 0f;
-    public override string Descripcio => "Diu que t'ha tocat un superpoder... però no fa res.";
+    public override string Descripcio => "No fa res! Era un xuixo normal i corrent.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { }
 }
@@ -209,7 +202,7 @@ public class EfecteLlaonaDeGirona : EfecteXuixo
 /// <summary>Neutre (5 s): desapareix tot el HUD.</summary>
 public class EfecteSenseHUD : EfecteXuixo
 {
-    public override string Nom => "HUD?";
+    public override string Nom => "ON ES EL HUD?";
     public override string Missatge => "ON ES EL HUD?";
     public override TipusEfecte Tipus => TipusEfecte.Neutre;
     public override float Durada => 5f;

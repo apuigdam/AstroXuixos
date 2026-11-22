@@ -65,7 +65,12 @@ public class GestorEfectes : MonoBehaviour
         // Només els que encara no han sortit 2 vegades
         List<EfecteXuixo> candidats = new List<EfecteXuixo>();
         foreach (EfecteXuixo e in disponibles)
-            if (vegades[e] < maxVegadesPerEfecte) candidats.Add(e);
+        {
+            if (vegades[e] >= maxVegadesPerEfecte) continue;
+            // La vida extra només surt si t'han tret alguna vida
+            if (e is EfecteVidaExtra && gm != null && gm.Vides >= gm.videsInicials) continue;
+            candidats.Add(e);
+        }
 
         // Si ja han sortit tots, toca un placebo
         EfecteXuixo triat = candidats.Count > 0
@@ -80,7 +85,8 @@ public class GestorEfectes : MonoBehaviour
         if (nau == null || gm == null) return;
 
         if (vegades.ContainsKey(efecte)) vegades[efecte]++;
-        gm.MostrarMissatge(efecte.Missatge, ColorDe(efecte.Tipus));
+        // A la pantalla: el nom de l'efecte en gran i, a sota, què fa
+        gm.MostrarMissatge(efecte.Nom, ColorDe(efecte.Tipus), efecte.Descripcio);
 
         // Instantani (Vida extra, Placebo...): s'aplica i ja està
         if (efecte.Durada <= 0f)
