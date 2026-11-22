@@ -94,6 +94,13 @@ public class Meteor : MonoBehaviour
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
+        else
+        {
+            // Explosio feta per codi: flaix, espurnes i trossos del meteorit
+            Sprite tros = fase2 != null ? fase2 : (sr != null ? sr.sprite : null);
+            EfectesVisuals.Explosio(transform.position, transform.lossyScale.x * 0.7f, tros);
+        }
+        FeedbackDany.Sacsejar(0.15f, 0.03f * transform.lossyScale.x);   // els grans sacsegen mes
         if (donarPunts && GameManager.Instance != null)
         {
             GameManager.Instance.SumarPuntsMeteorit(punts);   // te en compte l'efecte Punts invertits

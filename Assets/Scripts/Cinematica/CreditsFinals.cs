@@ -199,6 +199,10 @@ public class CreditsFinals : MonoBehaviour
 
         CrearTextResultat(rt, font, "PUNTS  " + ResultatsPartida.Punts.ToString("0000000"), 46, new Color32(255, 200, 120, 255), -190);
         CrearTextResultat(rt, font, "XUIXOS RECUPERATS  " + ResultatsPartida.Xuixos + "/" + ResultatsPartida.XuixosTotals, 30, new Color32(246, 236, 214, 255), -265);
+        if (ResultatsPartida.NouRecord)
+            CrearTextResultat(rt, font, "NOU RECORD!", 30, new Color32(255, 230, 90, 255), -330);
+        else if (ResultatsPartida.Record > 0)
+            CrearTextResultat(rt, font, "RECORD  " + ResultatsPartida.Record.ToString("0000000"), 24, new Color32(246, 236, 214, 255), -330);
     }
 
     private static void CrearTextResultat(RectTransform pare, Font font, string text, int mida, Color color, float y)

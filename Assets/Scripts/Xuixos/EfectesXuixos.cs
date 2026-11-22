@@ -14,6 +14,7 @@ public class EfecteTeclesInvertides : EfecteXuixo
     public override string Missatge => "TECLES INVERTIDES!";
     public override TipusEfecte Tipus => TipusEfecte.Debuff;
     public override float Durada => 8f;
+    public override string Descripcio => "Amunt i avall van al revés. Compte!";
 
     public override void Activar(PlayerScript nau, GameManager gm) { nau.controlsInvertits = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { nau.controlsInvertits = false; }
@@ -26,6 +27,7 @@ public class EfecteHipervelocitat : EfecteXuixo
     public override string Missatge => "HIPERVELOCITAT! PUNTS x2";
     public override TipusEfecte Tipus => TipusEfecte.Neutre;
     public override float Durada => 8f;
+    public override string Descripcio => "La nau va el doble de ràpid, però tots els punts valen x2.";
 
     public override void Activar(PlayerScript nau, GameManager gm)
     {
@@ -47,6 +49,7 @@ public class EfecteTrencaAsteroides : EfecteXuixo
     public override string Missatge => "TRENCA-ASTEROIDES!";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 6f;
+    public override string Descripcio => "Ets invencible i rebentes els meteorits només de tocar-los.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { if (gm.Xocs != null) gm.Xocs.trencaAsteroides = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { if (gm.Xocs != null) gm.Xocs.trencaAsteroides = false; }
@@ -59,6 +62,7 @@ public class EfecteDisparTriple : EfecteXuixo
     public override string Missatge => "DISPAR TRIPLE!";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 5f;
+    public override string Descripcio => "Dispares tres míssils alhora, en ventall.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { nau.dispararTriple = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { nau.dispararTriple = false; }
@@ -71,6 +75,7 @@ public class EfecteVidaExtra : EfecteXuixo
     public override string Missatge => "VIDA EXTRA! +1";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 0f;   // instantani
+    public override string Descripcio => "Recuperes una vida al moment.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { gm.SumarVida(); }
 }
@@ -89,6 +94,7 @@ public class EfectePlacebo : EfecteXuixo
     public override string Missatge => Missatges[Random.Range(0, Missatges.Length)];
     public override TipusEfecte Tipus => TipusEfecte.Buff;   // es mostra com a buff per enganyar
     public override float Durada => 0f;
+    public override string Descripcio => "Diu que t'ha tocat un superpoder... però no fa res.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { }
 }
@@ -104,6 +110,7 @@ public class EfecteModeMirall : EfecteXuixo
     public override string Missatge => "MODE MIRALL! DISPARES ENRERE";
     public override TipusEfecte Tipus => TipusEfecte.Debuff;
     public override float Durada => 8f;
+    public override string Descripcio => "La nau es gira i dispara cap enrere.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { Girar(nau, true); }
     public override void Desactivar(PlayerScript nau, GameManager gm) { Girar(nau, false); }
@@ -124,6 +131,7 @@ public class EfecteCameraLenta : EfecteXuixo
     public override string Missatge => "CAMERA LENTA!";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 6f;
+    public override string Descripcio => "Tot va a la meitat de velocitat: tens més temps per reaccionar.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { gm.CanviarEscalaTemps(0.5f); }
     public override void Desactivar(PlayerScript nau, GameManager gm) { gm.CanviarEscalaTemps(1f); }
@@ -136,6 +144,7 @@ public class EfectePuntsInvertits : EfecteXuixo
     public override string Missatge => "PUNTS INVERTITS! PETITS = 200";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 5f;
+    public override string Descripcio => "Els meteorits petits donen 200 punts i els grans només 50.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { gm.PuntsInvertits = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { gm.PuntsInvertits = false; }
@@ -148,6 +157,7 @@ public class EfecteBalesDePlastic : EfecteXuixo
     public override string Missatge => "BALES DE PLASTIC!";
     public override TipusEfecte Tipus => TipusEfecte.Debuff;
     public override float Durada => 5f;
+    public override string Descripcio => "Els míssils són de plàstic i no trenquen res.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { nau.balesDePlastic = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { nau.balesDePlastic = false; }
@@ -162,6 +172,7 @@ public class EfecteMonocromatisme : EfecteXuixo
     public override string Missatge => "ON SON ELS METEORITS?";
     public override TipusEfecte Tipus => TipusEfecte.Debuff;
     public override float Durada => 4f;
+    public override string Descripcio => "Els meteorits es tornen foscos i gairebé no es veuen.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { Pintar(ColorAmagat); }
     public override void Desactivar(PlayerScript nau, GameManager gm) { Pintar(Color.white); }
@@ -185,6 +196,7 @@ public class EfecteLlaonaDeGirona : EfecteXuixo
     public override string Missatge => "LA LLAONA DE GIRONA T'AJUDA!";
     public override TipusEfecte Tipus => TipusEfecte.Buff;
     public override float Durada => 5f;
+    public override string Descripcio => "Una nau petita t'acompanya i dispara sola.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { ajudant = NauAjudant.Crear(nau); }
     public override void Desactivar(PlayerScript nau, GameManager gm)
@@ -201,6 +213,7 @@ public class EfecteSenseHUD : EfecteXuixo
     public override string Missatge => "ON ES EL HUD?";
     public override TipusEfecte Tipus => TipusEfecte.Neutre;
     public override float Durada => 5f;
+    public override string Descripcio => "Desapareix tot el HUD: ni vides, ni punts, ni xuixos.";
 
     public override void Activar(PlayerScript nau, GameManager gm) { HUDJoc.Amagat = true; }
     public override void Desactivar(PlayerScript nau, GameManager gm) { HUDJoc.Amagat = false; }

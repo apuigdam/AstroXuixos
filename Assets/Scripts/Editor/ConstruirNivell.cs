@@ -41,16 +41,17 @@ public static class ConstruirNivell
 
     class Tram
     {
-        public string nom; public float espai; public float pPetit, pMitja; public float pDoble; public int xuixos;
-        public Tram(string n, float e, float pp, float pm, float pd, int x) { nom = n; espai = e; pPetit = pp; pMitja = pm; pDoble = pd; xuixos = x; }
+        public string nom; public float espai; public float pPetit, pMitja; public float pDoble; public int xuixos; public float velocitat;
+        public Tram(string n, float e, float pp, float pm, float pd, int x, float v) { nom = n; espai = e; pPetit = pp; pMitja = pm; pDoble = pd; xuixos = x; velocitat = v; }
     }
 
     // GDD: inici pocs i petits, mig de les 3 mides, final molts mitjans i grans
     static readonly Tram[] Trams =
     {
-        new Tram("Inici", 6.5f, 0.70f, 0.30f, 0.10f, 3),
-        new Tram("Mig",   4.8f, 0.40f, 0.40f, 0.25f, 4),
-        new Tram("Final", 3.8f, 0.15f, 0.45f, 0.35f, 3),
+        //        nom      espai  %petit %mitjà %doble xuixos velocitat
+        new Tram("Inici", 5.5f, 0.70f, 0.30f, 0.15f, 3, 0.6f),
+        new Tram("Mig",   4.2f, 0.40f, 0.40f, 0.30f, 4, 0.85f),
+        new Tram("Final", 3.4f, 0.15f, 0.45f, 0.40f, 3, 1.1f),
     };
 
     [MenuItem("AstroXuixos/Construir nivell (Game)")]
@@ -99,7 +100,7 @@ public static class ConstruirNivell
 
         // La càmera va 7 unitats per davant de la nau i en veu unes 9 a cada costat:
         // posem el final perquè no es vegi mai més enllà del fons
-        float xFinal = xMax - 18f;
+        float xFinal = xMax - 28f;   // deixem espai perquè la nau surti accelerant en guanyar
         float xInici = xNau + 14f;
         float xFi = xFinal - 6f;
         float llargadaTram = (xFi - xInici) / Trams.Length;
@@ -145,7 +146,7 @@ public static class ConstruirNivell
                 Mida m1 = TriarMida(rnd, tram);
                 float y1;
                 if (!TrobarY(rnd, x, m1, yMin, yMax, posXuixos, null, 0f, out y1)) continue;
-                CrearMeteorit(pareMeteorits, fases, m1, x, y1, ++numMeteorits);
+                CrearMeteorit(pareMeteorits, fases, m1, x, y1, ++numMeteorits, rnd, tram.velocitat);
 
                 // A vegades un segon meteorit a la mateixa columna, deixant un forat per passar
                 if (rnd.NextDouble() < tram.pDoble)
@@ -153,7 +154,7 @@ public static class ConstruirNivell
                     Mida m2 = TriarMida(rnd, tram);
                     float y2;
                     if (TrobarY(rnd, x, m2, yMin, yMax, posXuixos, m1, y1, out y2))
-                        CrearMeteorit(pareMeteorits, fases, m2, x + Rang(rnd, -0.8f, 0.8f), y2, ++numMeteorits);
+                        CrearMeteorit(pareMeteorits, fases, m2, x + Rang(rnd, -0.8f, 0.8f), y2, ++numMeteorits, rnd, tram.velocitat);
                 }
             }
         }
@@ -163,6 +164,14 @@ public static class ConstruirNivell
         final.transform.SetParent(nivell.transform);
         final.transform.position = new Vector3(xFinal, yCentre, 0f);
         final.tag = "Finish";
+
+        // ---- Càmera: fons negre (l'espai), per si mai es veu més enllà del fons ----
+        if (cam != null)
+        {
+            Undo.RecordObject(cam, "Fons negre");
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = Color.black;
+        }
 
         // ---- Nau: bala i punt de dispar ----
         ConfigurarNau(nau);
@@ -207,7 +216,8 @@ public static class ConstruirNivell
         return false;
     }
 
-    static void CrearMeteorit(Transform pare, Sprite[] fases, Mida m, float x, float y, int num)
+    static void CrearMeteorit(Transform pare, Sprite[] fases, Mida m, float x, float y, int num,
+                              System.Random rnd, float factorVelocitat)
     {
         GameObject go = new GameObject("Meteorit_" + m.nom + "_" + num);
         go.transform.SetParent(pare);
@@ -232,6 +242,17 @@ public static class ConstruirNivell
         met.fase2 = fases[2];
         met.punts = m.punts;
         met.impactesPerTrencar = m.impactes;
+
+        // Moviment: els petits es mouen més ràpid que els grans, i al final del nivell tots van més ràpid
+        Rigidbody2D rb = go.AddComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        MovimentMeteorit mov = go.AddComponent<MovimentMeteorit>();
+        float vy = m == Petit ? Rang(rnd, 1.6f, 2.4f) : (m == Mitja ? Rang(rnd, 1.0f, 1.7f) : Rang(rnd, 0.5f, 1.0f));
+        if (rnd.NextDouble() < 0.5) vy = -vy;
+        float vx = -Rang(rnd, 0.2f, 1.0f);
+        mov.velocitat = new Vector2(vx, vy) * factorVelocitat;
+        mov.gir = Rang(rnd, 10f, 40f) * (rnd.NextDouble() < 0.5 ? -1f : 1f);
     }
 
     static void ConfigurarNau(GameObject nau)

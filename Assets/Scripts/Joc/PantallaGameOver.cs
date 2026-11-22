@@ -23,6 +23,7 @@ public class PantallaGameOver : MonoBehaviour
     private string escenaMenu;
     private CanvasGroup grup;
     private Text textContinuar;
+    private Text textRecord;
     private Font font;
     private float temps;
     private bool sortint;
@@ -71,7 +72,11 @@ public class PantallaGameOver : MonoBehaviour
         CrearText("La nau ha quedat avariada", 26, Crema, 90);
         CrearText("PUNTS  " + punts.ToString("000000"), 40, Taronja, -20);
         CrearText("XUIXOS  " + xuixos + "/" + xuixosTotals, 40, Taronja, -90);
-        textContinuar = CrearText("Prem ESPAI per tornar al menú", 24, Crema, -230);
+        if (ResultatsPartida.NouRecord)
+            textRecord = CrearText("NOU RECORD!", 30, new Color32(255, 230, 90, 255), -160);
+        else
+            CrearText("RECORD  " + ResultatsPartida.Record.ToString("000000"), 26, Crema, -160);
+        textContinuar = CrearText("Prem ESPAI per tornar al menú", 24, Crema, -250);
         textContinuar.enabled = false;
     }
 
@@ -108,6 +113,10 @@ public class PantallaGameOver : MonoBehaviour
 
         float tempsVisible = temps - retardAparicio;
         if (tempsVisible < segonsAbansDePoderSortir) return;
+
+        // "NOU RECORD!" batega
+        if (textRecord != null)
+            textRecord.transform.localScale = Vector3.one * (1f + 0.08f * Mathf.Sin(Time.unscaledTime * 6f));
 
         // "Prem ESPAI..." fa pampallugues
         textContinuar.enabled = Mathf.Repeat(Time.unscaledTime, 1f) < 0.6f;

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Controla el menú principal: botons Jugar, Controls i Sortir.
+/// Controla el menú principal: botons Jugar, Controls, Xuixopedia i Sortir.
 /// Els botons criden aquests mètodes públics des del seu OnClick().
 /// </summary>
 public class MenuPrincipal : MonoBehaviour
@@ -32,6 +32,11 @@ public class MenuPrincipal : MonoBehaviour
         // Deixem el botó JUGAR seleccionat perquè funcioni amb teclat i comandament
         Seleccionar(botoJugar);
 
+        MostrarRecord();
+
+        // Botó i pàgina de la XUIXOPEDIA (es creen per codi, mireu XuixoPedia.cs)
+        gameObject.AddComponent<XuixoPedia>().Iniciar(botoControls, botoTornar, panellControls);
+
         // Música del menú (surt de BibliotecaSons)
         if (Sons.Biblioteca != null && Sons.Biblioteca.musicaMenu != null)
         {
@@ -45,6 +50,8 @@ public class MenuPrincipal : MonoBehaviour
 
     void Update()
     {
+        if (XuixoPedia.Oberta) return;   // mentre és oberta, la XUIXOPEDIA porta el teclat
+
         bool controlsOberts = panellControls != null && panellControls.activeSelf;
 
         // ESC (o el botó B del comandament) tanca el panell de controls
@@ -108,6 +115,32 @@ public class MenuPrincipal : MonoBehaviour
     }
 
     // ---------- Ajudes ----------
+
+    // Mostra el millor resultat a baix a la dreta (si ja s'ha jugat alguna partida)
+    private void MostrarRecord()
+    {
+        int record = PlayerPrefs.GetInt("AstroXuixos_Record", 0);
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (record <= 0 || canvas == null) return;
+
+        Font font = Resources.Load<Font>("Fonts/PressStart2P-Regular");
+        if (font == null) return;
+
+        GameObject go = new GameObject("Record", typeof(RectTransform), typeof(UnityEngine.UI.Text), typeof(UnityEngine.UI.Outline));
+        RectTransform rt = (RectTransform)go.transform;
+        rt.SetParent(canvas.transform, false);
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(1f, 0f);
+        rt.anchoredPosition = new Vector2(-30, 24);
+        rt.sizeDelta = new Vector2(600, 40);
+        UnityEngine.UI.Text t = go.GetComponent<UnityEngine.UI.Text>();
+        t.font = font;
+        t.fontSize = 20;
+        t.color = new Color32(255, 200, 120, 255);
+        t.alignment = TextAnchor.LowerRight;
+        t.raycastTarget = false;
+        t.text = "RECORD  " + record.ToString("0000000");
+        go.GetComponent<UnityEngine.UI.Outline>().effectColor = new Color(0f, 0f, 0f, 0.9f);
+    }
 
     private void Seleccionar(GameObject objecte)
     {

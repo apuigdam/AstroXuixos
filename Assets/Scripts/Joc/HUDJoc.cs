@@ -38,6 +38,8 @@ public class HUDJoc : MonoBehaviour
     private float tempsMissatge;
     private Color colorMissatge;
     private Font font;
+    private Text textTutorial;
+    public float segonsTutorial = 6f;
 
     void Start()
     {
@@ -52,6 +54,10 @@ public class HUDJoc : MonoBehaviour
             textInfo = CrearText("InfoXuixosEfectes", new Vector2(0f, 1f), new Vector2(40, -40), 24, TextAnchor.UpperLeft);
         if (textMissatge == null)
             textMissatge = CrearText("MissatgeEfecte", new Vector2(0.5f, 0.5f), new Vector2(0, 160), 48, TextAnchor.MiddleCenter);
+
+        // Tutorial: els controls surten els primers segons de la partida
+        textTutorial = CrearText("Tutorial", new Vector2(0.5f, 0f), new Vector2(0, 70), 22, TextAnchor.LowerCenter);
+        textTutorial.text = "FLETXES  moure      ESPAI  disparar      ESC  pausa";
 
         textInfo.supportRichText = true;
         textInfo.lineSpacing = 1.4f;
@@ -74,6 +80,14 @@ public class HUDJoc : MonoBehaviour
         }
 
         grup.alpha = Amagat ? 0f : 1f;
+
+        // El tutorial es fon després d'uns segons
+        if (textTutorial != null)
+        {
+            float a = Mathf.Clamp01(segonsTutorial - Time.timeSinceLevelLoad);
+            textTutorial.color = new Color(1f, 1f, 1f, a);
+            if (a <= 0f) { Destroy(textTutorial.gameObject); textTutorial = null; }
+        }
 
         // Barra de vida
         int vides = gm.Vides;

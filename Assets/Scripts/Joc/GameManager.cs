@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     public string escenaVictoria = "CinematicaFinal";
     public string escenaDerrota = "Menu";
     public float segonsAbansDeCanviar = 3f;
+    [Tooltip("En guanyar: segons que la nau surt accelerant abans de la fosa a la cinemàtica final")]
+    public float segonsVictoria = 1.2f;
+    public float velocitatSortida = 7f;
 
     [Header("Regles (GDD)")]
     public int videsInicials = 3;
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
             Xocs = nau.GetComponent<XocsJugador>();
             if (Xocs == null) Xocs = nau.AddComponent<XocsJugador>();
             if (nau.GetComponent<LimitsPantalla>() == null) nau.AddComponent<LimitsPantalla>();
+            if (GetComponent<MenuPausa>() == null) gameObject.AddComponent<MenuPausa>();
         }
         else
         {
@@ -196,6 +200,7 @@ public class GameManager : MonoBehaviour
 
         Vides--;
         Sons.XocNau();
+        FeedbackDany.Cop();   // sacseig de càmera i flaix vermell
         if (Vides <= 0)
         {
             Vides = 0;
@@ -246,17 +251,29 @@ public class GameManager : MonoBehaviour
         ResultatsPartida.Xuixos = XuixosRecollits;
         ResultatsPartida.XuixosTotals = XuixosTotals;
 
-        // Aturem la nau
+        // Rècord (es guarda a l'ordinador amb PlayerPrefs)
+        int record = PlayerPrefs.GetInt("AstroXuixos_Record", 0);
+        ResultatsPartida.NouRecord = Punts > record;
+        if (ResultatsPartida.NouRecord)
+        {
+            record = Punts;
+            PlayerPrefs.SetInt("AstroXuixos_Record", record);
+            PlayerPrefs.Save();
+        }
+        ResultatsPartida.Record = record;
+
+        // Si has guanyat, la nau surt accelerant cap endavant (com a la cinemàtica final);
+        // si has perdut, s'atura
         if (Jugador != null)
         {
             Jugador.enabled = false;
             Rigidbody2D rb = Jugador.GetComponent<Rigidbody2D>();
-            if (rb != null) rb.linearVelocity = Vector2.zero;
+            if (rb != null) rb.linearVelocity = guanyat ? new Vector2(velocitatSortida, 0f) : Vector2.zero;
         }
 
         if (guanyat)
         {
-            StartCoroutine(CarregarDespres(escena));
+            StartCoroutine(CarregarDespres(escena, segonsVictoria));
         }
         else
         {
@@ -266,9 +283,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator CarregarDespres(string escena)
+    IEnumerator CarregarDespres(string escena, float segons)
     {
-        yield return new WaitForSecondsRealtime(segonsAbansDeCanviar);
+        yield return new WaitForSecondsRealtime(segons);
         Transicio.CarregarEscena(escena);
     }
 }

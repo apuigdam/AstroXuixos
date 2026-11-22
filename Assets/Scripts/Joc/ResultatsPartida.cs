@@ -9,4 +9,6 @@ public static class ResultatsPartida
     public static int Punts;
     public static int Xuixos;
     public static int XuixosTotals = 10;
+    public static int Record;
+    public static bool NouRecord;
 }

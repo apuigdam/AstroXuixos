@@ -21,22 +21,28 @@ public class GestorEfectes : MonoBehaviour
     }
 
     // Tots els efectes que poden sortir. Per afegir-ne un, posa'l aquí.
-    private readonly List<EfecteXuixo> disponibles = new List<EfecteXuixo>
+    private readonly List<EfecteXuixo> disponibles = TotsElsEfectes();
+
+    /// <summary>Una llista nova amb tots els efectes (també la fa servir la XUIXOPEDIA del menú).</summary>
+    public static List<EfecteXuixo> TotsElsEfectes()
     {
-        new EfecteTeclesInvertides(),
-        new EfecteHipervelocitat(),
-        new EfecteTrencaAsteroides(),
-        new EfecteDisparTriple(),
-        new EfecteVidaExtra(),
-        new EfectePlacebo(),
-        new EfecteModeMirall(),
-        new EfecteCameraLenta(),
-        new EfectePuntsInvertits(),
-        new EfecteBalesDePlastic(),
-        new EfecteMonocromatisme(),
-        new EfecteLlaonaDeGirona(),
-        new EfecteSenseHUD(),
-    };
+        return new List<EfecteXuixo>
+        {
+            new EfecteTeclesInvertides(),
+            new EfecteHipervelocitat(),
+            new EfecteTrencaAsteroides(),
+            new EfecteDisparTriple(),
+            new EfecteVidaExtra(),
+            new EfectePlacebo(),
+            new EfecteModeMirall(),
+            new EfecteCameraLenta(),
+            new EfectePuntsInvertits(),
+            new EfecteBalesDePlastic(),
+            new EfecteMonocromatisme(),
+            new EfecteLlaonaDeGirona(),
+            new EfecteSenseHUD(),
+        };
+    }
 
     private readonly Dictionary<EfecteXuixo, int> vegades = new Dictionary<EfecteXuixo, int>();
     private readonly List<EfecteActiu> actius = new List<EfecteActiu>();

@@ -30,6 +30,7 @@ public static class Sons
             font = go.AddComponent<AudioSource>();
             font.playOnAwake = false;
             font.spatialBlend = 0f;
+            font.ignoreListenerPause = true;   // els sons dels botons sonen també amb el joc en pausa
         }
         font.PlayOneShot(clip, volum);
     }
